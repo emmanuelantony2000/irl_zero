@@ -1,0 +1,21 @@
+{
+  "name": "irl_zero",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "scripts": {
+    "build": "bun run build.ts",
+    "dev": "bun --hot index.ts",
+    "serve": "bun run index.ts"
+  },
+  "dependencies": {
+    "marked": "^17.0.4",
+    "reveal.js": "^5.2.1"
+  }
+}
