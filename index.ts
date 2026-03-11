@@ -67,7 +67,8 @@ Bun.serve({
       });
     }
 
-    let path = url.pathname === "/" ? "/dist/index.html" : url.pathname;
+    const distPath = url.pathname === "/" ? "/index.html" : url.pathname;
+    let path = `/dist${distPath}`;
     const filePath = join(import.meta.dir, path);
 
     if (!existsSync(filePath)) {

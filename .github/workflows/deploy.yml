@@ -26,16 +26,6 @@ jobs:
 
       - run: bun run build
 
-      - name: Copy assets for GitHub Pages
-        run: |
-          mkdir -p dist/node_modules/reveal.js/dist/theme
-          mkdir -p dist/node_modules/reveal.js/plugin/highlight
-          cp node_modules/reveal.js/dist/reveal.js dist/node_modules/reveal.js/dist/
-          cp node_modules/reveal.js/dist/reveal.css dist/node_modules/reveal.js/dist/
-          cp node_modules/reveal.js/dist/theme/black.css dist/node_modules/reveal.js/dist/theme/
-          cp node_modules/reveal.js/plugin/highlight/highlight.js dist/node_modules/reveal.js/plugin/highlight/
-          cp node_modules/reveal.js/plugin/highlight/monokai.css dist/node_modules/reveal.js/plugin/highlight/
-
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist

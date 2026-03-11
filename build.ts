@@ -1,5 +1,5 @@
 import { marked } from "marked";
-import { mkdirSync } from "fs";
+import { mkdirSync, cpSync } from "fs";
 
 export async function build(): Promise<number> {
   const slidesRaw = await Bun.file("slides.md").text();
@@ -26,12 +26,9 @@ export async function build(): Promise<number> {
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AI on Chip and Diffusion Models</title>
-    <link rel="stylesheet" href="/node_modules/reveal.js/dist/reveal.css" />
-    <link rel="stylesheet" href="/node_modules/reveal.js/dist/theme/black.css" />
-    <link
-      rel="stylesheet"
-      href="/node_modules/reveal.js/plugin/highlight/monokai.css"
-    />
+    <link rel="stylesheet" href="reveal.css" />
+    <link rel="stylesheet" href="theme/black.css" />
+    <link rel="stylesheet" href="plugin/highlight/monokai.css" />
     <style>
       :root {
         --accent: #00d4ff;
@@ -304,8 +301,8 @@ ${sections.join("\n\n")}
       </div>
     </div>
 
-    <script src="/node_modules/reveal.js/dist/reveal.js"></script>
-    <script src="/node_modules/reveal.js/plugin/highlight/highlight.js"></script>
+    <script src="reveal.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
     <script>
       Reveal.initialize({
         hash: true,
@@ -321,6 +318,13 @@ ${sections.join("\n\n")}
 </html>`;
 
   mkdirSync("dist", { recursive: true });
+  mkdirSync("dist/theme", { recursive: true });
+  mkdirSync("dist/plugin/highlight", { recursive: true });
+  cpSync("node_modules/reveal.js/dist/reveal.js", "dist/reveal.js");
+  cpSync("node_modules/reveal.js/dist/reveal.css", "dist/reveal.css");
+  cpSync("node_modules/reveal.js/dist/theme/black.css", "dist/theme/black.css");
+  cpSync("node_modules/reveal.js/plugin/highlight/highlight.js", "dist/plugin/highlight/highlight.js");
+  cpSync("node_modules/reveal.js/plugin/highlight/monokai.css", "dist/plugin/highlight/monokai.css");
   await Bun.write("dist/index.html", fullHtml);
   console.log(`Rebuilt ${sections.length} slides → dist/index.html`);
   return sections.length;
