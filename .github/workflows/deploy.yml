@@ -1,0 +1,51 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+
+      - run: bun install
+
+      - run: bun run build
+
+      - name: Copy assets for GitHub Pages
+        run: |
+          mkdir -p dist/node_modules/reveal.js/dist/theme
+          mkdir -p dist/node_modules/reveal.js/plugin/highlight
+          cp node_modules/reveal.js/dist/reveal.js dist/node_modules/reveal.js/dist/
+          cp node_modules/reveal.js/dist/reveal.css dist/node_modules/reveal.js/dist/
+          cp node_modules/reveal.js/dist/theme/black.css dist/node_modules/reveal.js/dist/theme/
+          cp node_modules/reveal.js/plugin/highlight/highlight.js dist/node_modules/reveal.js/plugin/highlight/
+          cp node_modules/reveal.js/plugin/highlight/monokai.css dist/node_modules/reveal.js/plugin/highlight/
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
