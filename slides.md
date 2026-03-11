@@ -53,7 +53,7 @@ Custom silicon &bull; Taalas
 - <span class="highlight">Total Specialization</span> &mdash; custom silicon optimized for a *specific* AI model, not general-purpose
 - <span class="highlight">Unified Memory-Compute</span> &mdash; storage and compute on a single chip at DRAM-level density, eliminating the memory wall
 
----
+<!-----
 
 ## GPU vs TPU vs AI-on-Chip
 
@@ -98,7 +98,7 @@ Custom silicon &bull; Taalas
 <td>Inference only</td>
 </tr>
 </tbody>
-</table>
+</table>-->
 
 ---
 
@@ -240,38 +240,6 @@ All tokens generated and refined simultaneously
 
 ---
 
-## How Text Diffusion Works Internally
-
-### The Forward & Reverse Process
-
-<div class="two-col">
-<div class="col-box">
-<h3 style="color: var(--accent)">Forward (Training)</h3>
-<ul>
-<li>Take a clean text sequence</li>
-<li>Gradually add Gaussian noise to token embeddings</li>
-<li>At each timestep t, the signal degrades</li>
-<li>Model learns: given noise level t, predict the clean tokens</li>
-</ul>
-</div>
-<div class="col-box">
-<h3 style="color: var(--accent2)">Reverse (Inference)</h3>
-<ul>
-<li>Start from pure noise in embedding space</li>
-<li>Condition on the input prompt</li>
-<li>Denoise step by step</li>
-<li>Each step: predict &amp; subtract noise from <strong>all positions</strong></li>
-</ul>
-</div>
-</div>
-
-<p style="font-size: 0.75em; color: #888; text-align: center; margin-top: 15px">
-Works in continuous embedding space, not discrete token space
-&mdash; tokens are decoded at the final step
-</p>
-
----
-
 ## Can Diffusion Models "Think"?
 
 ### Chain-of-Thought in Diffusion
@@ -290,35 +258,9 @@ Works in continuous embedding space, not discrete token space
 <div class="flow-step">Final Answer<br /><span class="small">step T</span></div>
 </div>
 
-- More denoising steps = more "thinking time" &mdash; akin to <span class="highlight">compute-at-inference scaling</span>
-- Research area: can the model learn to allocate more refinement steps to harder parts?
+- More denoising steps = more thinking
 
----
-
-## Why Transformers Struggle with Image Generation
-
-<div class="two-col">
-<div class="col-box">
-<h3 style="color: var(--accent)">The Problem</h3>
-<ul>
-<li>Images have <strong>no natural left-to-right order</strong> &mdash; autoregressive generation is unnatural</li>
-<li>A 512x512 image = 262,144 pixels &mdash; generating one at a time is prohibitively slow</li>
-<li>Spatial coherence requires <span class="highlight2">global context</span>, not just left-context</li>
-<li>Quadratic attention cost on long pixel sequences</li>
-</ul>
-</div>
-<div class="col-box">
-<h3 style="color: var(--accent2)">Why Diffusion Fits</h3>
-<ul>
-<li>Operates on the <strong>entire image at once</strong> &mdash; naturally parallel</li>
-<li>Works in <span class="highlight">latent space</span> (e.g., 64x64) not pixel space</li>
-<li>Global refinement preserves spatial coherence across the whole image</li>
-<li>Fixed compute cost per step regardless of output resolution</li>
-</ul>
-</div>
-</div>
-
----
+<!-----
 
 ## Diffusion vs Transformers for Text
 
@@ -356,18 +298,8 @@ Works in continuous embedding space, not discrete token space
 <td>State-of-the-art</td>
 <td>Improving rapidly</td>
 </tr>
-<tr>
-<td><strong>Controllability</strong></td>
-<td>Via prompting</td>
-<td>Via guidance + prompting</td>
-</tr>
-<tr>
-<td><strong>Error handling</strong></td>
-<td>Errors cascade forward</td>
-<td>Errors corrected in later steps</td>
-</tr>
 </tbody>
-</table>
+</table>-->
 
 ---
 
@@ -380,9 +312,6 @@ Works in continuous embedding space, not discrete token space
 <li>Parallel generation &mdash; massive speedup for long outputs</li>
 <li>Self-correcting: later steps fix earlier errors</li>
 <li>Global coherence &mdash; the whole output is refined together</li>
-<li>Controllable via classifier-free guidance</li>
-<li>Natural fit for editing / infilling tasks</li>
-<li>Compute scaling at inference time (more steps = better)</li>
 </ul>
 </div>
 <div class="col-box cons">
@@ -391,27 +320,10 @@ Works in continuous embedding space, not discrete token space
 <li>Fixed output length &mdash; must pre-specify size</li>
 <li>Text quality still lags behind top autoregressive models</li>
 <li>Harder to do streaming / real-time output</li>
-<li>Training is more complex (noise schedules, sampling)</li>
-<li>Discrete tokens don't naturally fit continuous diffusion</li>
-<li>Less mature ecosystem and tooling</li>
+<li>Complex training</li>
 </ul>
 </div>
 </div>
-
----
-
-## Notable Text Diffusion Models
-
-- <span class="highlight">Diffusion-LM</span> (Li et al., 2022) &mdash; first controllable text diffusion model
-- <span class="highlight">MDLM</span> (Masked Discrete Language Model) &mdash; bridges discrete tokens and diffusion
-- <span class="highlight">SEDD</span> (Score Entropy Discrete Diffusion) &mdash; works directly in discrete token space
-- <span class="highlight">Mercury</span> (Inception Labs) &mdash; first diffusion LLM with competitive benchmarks, 10x faster generation
-- <span class="highlight">Dream / LLaDA</span> &mdash; discrete diffusion that matches autoregressive quality on some benchmarks
-
-<p style="font-size: 0.75em; color: #888; margin-top: 15px">
-The field is moving fast &mdash; 2024-2025 saw major breakthroughs
-in closing the quality gap.
-</p>
 
 ---
 
@@ -419,15 +331,8 @@ in closing the quality gap.
 
 ## Key Takeaways
 
-<div style="text-align: left; max-width: 700px; margin: 30px auto">
-<ul style="font-size: 0.85em; line-height: 2">
-<li><span class="highlight">AI-on-chip</span> trades flexibility for extreme speed and efficiency &mdash; specialization is the future of inference</li>
-<li><span class="highlight">Taalas</span> eliminates the memory wall by unifying compute and storage on a single chip</li>
-<li><span class="highlight2">Diffusion models</span> break the autoregressive bottleneck with parallel token generation</li>
-<li><span class="highlight2">Thinking in diffusion</span> = iterative global refinement, not sequential token generation</li>
-<li>Both represent a shift: from <em>general &rarr; specialized</em> and from <em>sequential &rarr; parallel</em></li>
-</ul>
-</div>
+- These are two of the ways to get higher tokens/sec
+- Makes AI availability cheaper and scales it up
 
 ---
 
@@ -437,11 +342,4 @@ in closing the quality gap.
 
 <p style="color: #888; font-size: 0.8em; margin-top: 30px">
 Questions?
-</p>
-
-<p class="small" style="margin-top: 40px">
-References: Taalas &mdash;
-<em>The Path to Ubiquitous AI</em> &bull; Li et al. &mdash;
-<em>Diffusion-LM</em> (2022) &bull; Inception Labs &mdash;
-<em>Mercury</em> (2024)
 </p>
