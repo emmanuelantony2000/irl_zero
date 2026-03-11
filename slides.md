@@ -144,6 +144,12 @@ NVIDIA H200 comparison: ~1,700 tokens/sec
 
 ---
 
+## See It in Action
+
+<blockquote class="twitter-tweet" data-media-max-width="560"><p lang="en" dir="ltr">the level of innovations in &#39;chip&#39; design lately is wild<br><br>- Taalas, which hardwires AI models directly into silicon, hitting 16,000 tokens/sec by ditching GPUs entirely and baking frozen weights into the transistors themselves (demo below of how fast that is)<br>- Cortical Labs,… <a href="https://t.co/xf0zZp2iKJ">pic.twitter.com/xf0zZp2iKJ</a></p>&mdash; @aaronjmars (@aaronjmars) <a href="https://twitter.com/aaronjmars/status/2029697117133152345?ref_src=twsrc%5Etfw">March 5, 2026</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+---
+
 <!-- .slide: class="section-divider" -->
 
 ## Part II
@@ -324,6 +330,12 @@ All tokens generated and refined simultaneously
 </ul>
 </div>
 </div>
+
+---
+
+## See It in Action
+
+<blockquote class="twitter-tweet" data-media-max-width="560"><p lang="en" dir="ltr">The most interesting LLM breakthrough of 2025 isn&#39;t from OpenAI or Anthropic, but from Inception Labs - and it&#39;s completely changing how LLMs work.<br>Inception Labs just released &quot;Mercury&quot; - the first diffusion-based language model that&#39;s generating text at speeds we&#39;ve never seen… <a href="https://t.co/0iLgsSmqBO">pic.twitter.com/0iLgsSmqBO</a></p>&mdash; Nir Gazit (@nir_ga) <a href="https://twitter.com/nir_ga/status/1900178853508624819?ref_src=twsrc%5Etfw">March 13, 2025</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 ---
 
